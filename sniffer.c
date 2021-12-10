@@ -22,13 +22,12 @@ int main(int argc, char * argv[]){
 		return 0;
 	}
 
-	if(strcmp(argv[1],"-t") == 0 && argc == 3){
-		uid_t user =  getuid();
-		if((int)user != 0){
-			printf("Please, run this as root or with sudo permissions.");
-			return 1;
-		}
+	int user = checkSudo();
+	if (user != 0){
+		return 1;
+	}
 
+	if(strcmp(argv[1],"-t") == 0 && argc == 3){
 		open_device(argv[2]);
 		return 0;
 	}

@@ -78,6 +78,16 @@ u_char * intercept_paquet(char * device){
 
 }
 
+uid_t checkSudo(){
+	uid_t user = getuid();
+	if((int)user != 0){
+		printf("Please, run this as root or with sudo permissions.");
+	}
+	return user;
+}
+
+		
+
 void print_help(){
 	printf("Welcome on sniffer based on pcap lib \nUse ./sniffer -h to display this help. \nAll parameters : \n-L : To list all interfaces available to sniff on;\n-t device : To test the connection on the device passed");
 }
