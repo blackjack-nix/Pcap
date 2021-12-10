@@ -1,6 +1,13 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
 #include <pcap.h>
 #include <unistd.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netinet/if_ether.h>
+#include <time.h>
 
 
 #include "functions.h"
@@ -39,16 +46,36 @@ void detect_all_devices(){
 	}
 }
 
-pcap_t * test_device(char * device){
+pcap_t * open_device(char * device){
 	pcap_t * handle;
 	char error_buffer[PCAP_ERRBUF_SIZE];
 	handle = pcap_open_live(device,BUFSIZ,1, 1000, error_buffer);
 	if(handle==NULL){
-		printf("Error while opening device %s : %S", device, error_buffer);
+		printf("Error while opening device %s : %s \n", device, error_buffer);
 		return NULL; 
 	}
-	printf("Connection successful with %s", device);
+	printf("Connection successful with %s \n", device);
 	return handle;
+}
+
+u_char * intercept_paquet(char * device){
+	const u_char *packet;
+	pcap_t * handle;
+	struct pcap_pkthdr hdr;
+
+	handle = open_device(device);
+	packet = pcap_next(handle,&hdr);
+
+	if (packet == NULL){
+		printf("Did'n grab any paquet \n");
+		return NULL;
+	}
+
+	printf("Grabbed packet of length %d\n",hdr.len);
+    printf("Recieved at ..... %s",ctime((const time_t *)&hdr.ts.tv_sec)); 
+    printf("Ethernet address length is %d\n",ETHER_HDR_LEN);
+	return (u_char *)packet;
+
 }
 
 void print_help(){

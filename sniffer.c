@@ -29,7 +29,16 @@ int main(int argc, char * argv[]){
 			return 1;
 		}
 
-		test_device(argv[2]);
+		open_device(argv[2]);
+		return 0;
+	}
+
+	if(strcmp(argv[1],"-i") == 0 && argc == 3){
+		u_char * paquet = intercept_paquet(argv[2]);
+		if(paquet == NULL){
+			return 1;
+		}
+		return 0;
 	}
 
 
