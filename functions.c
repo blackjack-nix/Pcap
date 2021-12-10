@@ -89,5 +89,5 @@ uid_t checkSudo(){
 		
 
 void print_help(){
-	printf("Welcome on sniffer based on pcap lib \nUse ./sniffer -h to display this help. \nAll parameters : \n-L : To list all interfaces available to sniff on;\n-t device : To test the connection on the device passed");
+	printf("Welcome on sniffer based on pcap lib \nUse ./sniffer -h to display this help. \nAll parameters : \n-L : To list all interfaces available to sniff on;\n-t device : To test the connection on the device passed\n-i interface : precise the interface and grab one packet");
 }
