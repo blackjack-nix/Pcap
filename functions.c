@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <pcap.h>
+#include <unistd.h>
+
 
 #include "functions.h"
 
@@ -37,15 +39,16 @@ void detect_all_devices(){
 	}
 }
 
-void test_device(char * device){
+pcap_t * test_device(char * device){
 	pcap_t * handle;
 	char error_buffer[PCAP_ERRBUF_SIZE];
 	handle = pcap_open_live(device,BUFSIZ,1, 1000, error_buffer);
 	if(handle==NULL){
 		printf("Error while opening device %s : %S", device, error_buffer);
-		return; 
+		return NULL; 
 	}
 	printf("Connection successful with %s", device);
+	return handle;
 }
 
 void print_help(){

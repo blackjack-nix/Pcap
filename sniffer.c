@@ -1,4 +1,5 @@
 #include <string.h>
+#include <unistd.h>
 
 #include "functions.h"
 #include "functions.c"
@@ -22,6 +23,12 @@ int main(int argc, char * argv[]){
 	}
 
 	if(strcmp(argv[1],"-t") == 0 && argc == 3){
+		uid_t user =  getuid();
+		if((int)user != 0){
+			printf("Please, run this as root or with sudo permissions.");
+			return 1;
+		}
+
 		test_device(argv[2]);
 	}
 
