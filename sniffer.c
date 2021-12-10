@@ -5,8 +5,9 @@
 
 int main(int argc, char * argv[]){
 	
+
 	if(argc == 1){
-		printf("Use ./sniffer to print help");
+		printf("Use ./sniffer -h to print help");
 		return 1;
 	}
 
@@ -18,6 +19,10 @@ int main(int argc, char * argv[]){
 	if(strcmp(argv[1],"-L") == 0 && argc == 2){
 		detect_all_devices();
 		return 0;
+	}
+
+	if(strcmp(argv[1],"-t") == 0 && argc == 3){
+		test_device(argv[2]);
 	}
 
 

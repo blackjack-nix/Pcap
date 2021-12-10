@@ -37,6 +37,17 @@ void detect_all_devices(){
 	}
 }
 
+void test_device(char * device){
+	pcap_t * handle;
+	char error_buffer[PCAP_ERRBUF_SIZE];
+	handle = pcap_open_live(device,BUFSIZ,1, 1000, error_buffer);
+	if(handle==NULL){
+		printf("Error while opening device %s : %S", device, error_buffer);
+		return; 
+	}
+	printf("Connection successful with %s", device);
+}
+
 void print_help(){
-	printf("Welcome on sniffer based on pcap lib \nUse ./sniffer -h to display this help. \nAll parameters : \n-L : To list all interfaces available to sniff on;");
+	printf("Welcome on sniffer based on pcap lib \nUse ./sniffer -h to display this help. \nAll parameters : \n-L : To list all interfaces available to sniff on;\n-t device : To test the connection on the device passed");
 }
