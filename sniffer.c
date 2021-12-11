@@ -34,10 +34,13 @@ int main(int argc, char * argv[]){
 			return 1;
 		}
 
-		u_char * paquet = intercept_paquet(argv[2]);
-		if(paquet == NULL){
+		u_char * packet = intercept_paquet(argv[2]);
+		if(packet == NULL){
 			return 1;
 		}
+
+		analyse_packet(packet);
+
 		return 0;
 	}
 

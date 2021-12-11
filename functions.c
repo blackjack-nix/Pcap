@@ -75,6 +75,19 @@ u_char * intercept_paquet(char * device){
     printf("Recieved at ..... %s",ctime((const time_t *)&hdr.ts.tv_sec)); 
     printf("Ethernet address length is %d\n",ETHER_HDR_LEN);
 	return (u_char *)packet;
+}
+
+void analyse_packet(u_char * packet){
+	struct ether_header *eptr = (struct ether_header *)packet;
+	int type = ntohs(eptr->ether_type);
+
+	if(type == ETHERTYPE_IP){
+		printf("Ethernet type %d is an IP packet\n",type);
+	} else if(type == ETHERTYPE_ARP){
+		printf("Ethernet type %d is an ARP packet\n",type);
+	} else {
+		printf("Ethernet type %d is not IP\n",type);
+	}
 
 }
 
